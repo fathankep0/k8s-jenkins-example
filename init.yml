@@ -13,4 +13,4 @@
     - name: set up authorized keys for the ansible user
       authorized_key: user=ansible key="{{item}}"
       with_file:
-        - ~/.ssh/id_rsa.pub
+        - ~/.ssh/id_rsa
