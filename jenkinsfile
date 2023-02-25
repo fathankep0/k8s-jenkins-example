@@ -8,9 +8,9 @@ pipeline {
         script {
           sh """
           printenv | sort
-          echo githubUrl = "${env.githubUrl}"
-          echo githubRepo = "${env.githubRepo}"
-          echo githubCredId= "${env.githubcredId}"
+          echo githubUrl = ${"env.githubUrl"}
+          echo githubRepo = ${"env.githubRepo"}
+          echo githubCredId= ${"env.githubcredId"}
         }
       }
     }
