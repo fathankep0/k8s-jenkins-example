@@ -10,7 +10,7 @@ pipeline {
           printenv | sort
           echo githubUrl = ${"env.githubUrl"}
           echo githubRepo = ${"env.githubRepo"}
-          echo githubCredId= ${"env.githubcredId"}
+          echo github= ${"env.github"}
         }
       }
     }
