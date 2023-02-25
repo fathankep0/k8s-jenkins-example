@@ -1,2 +1,18 @@
 @library("shared-library@master")_ 
 
+pipeline {
+  agent any
+  stages {
+    stage ('preperation shared-library') {
+      steps {
+        script {
+          sh """
+          printenv | sort
+          echo githubUrl = "${env.githubUrl}"
+          echo githubRepoUrl = "${env.githubRepoUrl}"
+          echo githubCred = "${env.githubcred}"
+        }
+      }
+    }
+  }
+}
