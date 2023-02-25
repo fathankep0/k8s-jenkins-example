@@ -1,5 +1,5 @@
 import jenkins.model.*
-def instance = Jenkins.getInstance()
+
 pipeline {
   agent any
   environment {
@@ -12,8 +12,8 @@ pipeline {
         script {
           sh """
           printenv | sort
-          println (env.githubRepo)
-          println (env.githubCredId)
+          println System.getenv("$githubRepo")
+          println System.getenv("$githubCredId")
           """
         }
       }
