@@ -1,4 +1,5 @@
 import jenkins.model.*
+def instance = Jenkins.getInstance()
 pipeline {
   agent any
   environment {
