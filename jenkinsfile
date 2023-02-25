@@ -11,6 +11,7 @@ pipeline {
           echo githubUrl = ${"env.githubUrl"}
           echo githubRepo = ${"env.githubRepo"}
           echo github= ${"env.github"}
+          """
         }
       }
     }
