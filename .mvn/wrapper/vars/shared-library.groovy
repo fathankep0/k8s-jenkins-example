@@ -14,7 +14,7 @@ pipeline {
           sh """
           printenv | sort
           echo githubRepo = ${"env.githubRepo"}
-          echo githubCredId= ${"env.github"}
+          echo githubCredId = ${"env.githubCredId"}
           """
         }
       }
