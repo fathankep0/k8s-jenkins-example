@@ -1,1 +1,3 @@
 @library('jenkins@master)_
+
+k8s-jenkins-example()
