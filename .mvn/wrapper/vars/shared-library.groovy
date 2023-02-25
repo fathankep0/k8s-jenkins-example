@@ -1,4 +1,4 @@
-@library("shared-library@master")_ 
+import jenkins.model.*
 def call {
 }
 pipeline {
