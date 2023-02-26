@@ -1,6 +1,6 @@
 import jenkins.model.*
 jenkins = Jenkins.instance
-def call (String repourl){
+def call (String repoUrl){
     pipeline {
         agent any
         environment {
