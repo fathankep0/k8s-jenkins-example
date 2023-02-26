@@ -1,2 +1,2 @@
-@Library('first-shared-lib') _
+@Library('java-maven') _
 jenkinsForJava 'https://github.com/fathankep0/k8s-jenkins-example.git'
