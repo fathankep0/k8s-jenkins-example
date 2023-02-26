@@ -21,3 +21,4 @@ pipeline {
     }
   }
 }
+println result
