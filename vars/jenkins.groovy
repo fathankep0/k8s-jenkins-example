@@ -14,7 +14,8 @@ pipeline {
           printenv | sort
           println System.getenv("$githubRepo")
           println System.getenv("$githubCredId")
-          """
+          println "uname -a".execute().text
+          """.trims()
         }
       }
     }
