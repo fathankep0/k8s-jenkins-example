@@ -1,2 +1,2 @@
-@library("jenkins@master") _
+@library('shared-library') _
 
