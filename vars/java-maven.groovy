@@ -1,13 +1,10 @@
-| --- welcomeJob.groovy
-| --- jenkinsForJava.groovy
- 
 // jenkinsForJava.groovy
 def call(String repoUrl) {
   pipeline {
        agent any
        tools {
-           maven 'Maven 3.5.0'
-           jdk 'jdk8'
+           maven 'maven'
+           jdk 'JDK-11'
        }
        stages {
            stage("Tools initialization") {
