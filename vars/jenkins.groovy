@@ -1,4 +1,4 @@
-@Library('jenkins@deveploment')_
+@Library('Jenkins@deveploment')_
 
 properties([
   buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '', numToKeepStr: '10')),
