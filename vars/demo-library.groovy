@@ -1,3 +1,5 @@
+def call (string url) { 
+
 pipeline {
     agent any
     environment {
@@ -261,3 +263,4 @@ pipeline {
                 }
     	    }
         }
+}
