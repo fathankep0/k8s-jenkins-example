@@ -1,4 +1,4 @@
-- hosts: stagging
+- hosts: frontend
   become: yes
   tasks: 
 
