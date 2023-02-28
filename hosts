@@ -1,2 +1,2 @@
-[stagging]
-159.223.48.168 ansible_user=root
+[frontend]
+146.190.106.169 ansible_user=root
