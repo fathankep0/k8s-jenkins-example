@@ -160,10 +160,10 @@ pipeline {
                         script: [
                                 script: '''
                                     if(ENV.equals("demo")){
-                                    return["frontend: 159.223.46.121"]
+                                    return["frontend: 10.104.0.3"]
                                     }
                                     else if(ENV.equals("demo")){
-                                        return["backend: 159.223.46.121"]
+                                        return["backend: 10.104.0.2"]
                                         }
                                         '''
                                     ]
