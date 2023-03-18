@@ -1,2 +1,6 @@
-[frontend]
-10.104.0.3 ansible_user=root
+[targetHost]
+10.104.0.3 ansible_ssh_user=sshuser
+
+[all:vars]
+ansible_connection=ssh
+ansible_ssh_common_args='-o StrictHostKeyChecking=no -oHostKeyAlgorithms=+ssh-dss'
