@@ -11,7 +11,6 @@ pipeline {
            // List all branches in your repo. 
            sh "git branch -a"
            // Checkout to a specific branch in your repo.
-           ansiblePlaybook become: true, credentialsId: 'sshkey', disableHostKeyChecking: true, installation: 'ansible', inventory: 'task.yml', playbook: 'hosts', vaultCredentialsId: 'vault'vault'
           }
        }
     }
