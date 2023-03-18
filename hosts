@@ -1,5 +1,5 @@
-[targetHost]
-10.104.0.3 ansible_ssh_user=sshuser
+[frontend]
+10.104.0.3 ansible_ssh_user=root
 
 [all:vars]
 ansible_connection=ssh
