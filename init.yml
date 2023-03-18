@@ -1,11 +1,21 @@
-- hosts: stagging
-  become: yes
-  tasks:
-    - name: create the 'ansible' user
-      user: name=ansible append=yes state=present createhome=yes shell=/bin/bash
+---
 
-    - name: allow 'ansible' to have passwordless sudo
-      lineinfile:
-        dest: /etc/sudoers
-        line: 'ansible ALL=(ALL) NOPASSWD: ALL'
-        validate: 'visudo -cf %s'
+- name: setup deployment STACK "{{ project_name }}" "{{ ansible_ssh_user }}"
+  hosts: "{{ hostname }}"
+  gather_facts: false
+  become: true
+  ignore_errors: false
+  serial: 1
+  vars:
+    branch : "{{ lookup('env', 'BRANCH_NAME') }}"
+    currentFolder: "{{ lookup('env', 'PWD') }}"
+    giturl : "{{ lookup('env', 'GIT_URL') }}"
+    home_project: "{{ lookup('env', 'WORKSPACE') }}"
+    project_name : "{{ lookup('env', 'PROJECT_NAME') }}"
+
+  vars_files:
+    - "{{ home_project }}/env_vars/env/all.json"
+    - "{{ home_project }}/env_vars/env/{{ paramsProjectStack }}.json"
+
+  roles:
+    - { role: '{{ home_project }}/roles/deployment' }
