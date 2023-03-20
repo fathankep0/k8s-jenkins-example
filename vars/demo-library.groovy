@@ -1,33 +1,6 @@
 import com.cloudbees.plugins.credentials.CredentialsProvider;
 import com.cloudbees.plugins.credentials.common.StandardUsernamePasswordCredentials;
 import jenkins.model.Jenkins
-
-def getAllBranches(url, credentialID, activeChoice = false, defaultBranch = 'master') {
-  def jenkinsCredentials = CredentialsProvider.lookupCredentials(
-          com.cloudbees.jenkins.plugins.sshcredentials.impl.BasicSSHUserPrivateKey,
-          Jenkins.instance
-  );
-  def key = jenkinsCredentials.findResult { it.id == credentialID ? it.privateKey : null }
-
-  if( !key ) {
-    return 'Error: credentials not found'
-  }
-
-  Process process = ['ssh-agent','bash','-c', "echo '" + key + "' | ssh-add - 2> /dev/null && git ls-remote -t -h " + url].execute()
-  def out = new StringBuilder()
-  def err = new StringBuilder()
-  process.consumeProcessOutput( out, err )
-  process.waitFor()
-  if( err.size() > 0 ) return err
-  if( out.size() > 0 ) {
-      def branches = out.readLines().collect { it.split()[1].replaceAll('refs/heads/', '') }
-      if( activeChoice ) {
-        def defaultBranchIndex = branches.indexOf(defaultBranch)
-        if( defaultBranchIndex >= 0 ) branches.set(defaultBranchIndex, defaultBranch + ':selected')
-      }
-      return branches
-  }
-}
 pipeline {
     agent any
     environment {
