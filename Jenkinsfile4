@@ -1,0 +1,247 @@
+pipeline {
+    agent any
+    environment {
+    // repo ANSIBLE
+        def GITHUB = "git@api.github.com"
+        def GITHUB_REPO = "fathankep0"
+    // def GITLAB_INFRA_GROUP = 'devsecops'
+    // def GITLAB_REPOSITORY_ANSIBLE = 'infra-as-code'
+    // def GITLAB_ANSIBLE = "${GITLAB}:${GITLAB_GROUP}/${GITLAB_INFRA_GROUP}/${GITLAB_REPOSITORY_ANSIBLE}.git"
+        def GITHUB_BRANCH = "deveploment"
+        def GITHUB_REPO_URL = "https://github.com/fathankep0/k8s-jenkins-example.git"
+        def GITHUBCRED = "GITHUBCRED"
+    // def GITLAB_URL_ANSIBLE = "infra-as-code-development"
+    //def GITLAB_INFRA_REPO = "${GITLAB}/${GITLAB_INFRA_GROUP}/${GITLAB_REPOSITORY_ANSIBLE}/-/archive/${GITLAB_BRANCH_ANSIBLE}/${GITLAB_URL_ANSIBLE}.zip"
+    // def GITLAB_INFRA_REPO = "${GITLAB_ANSIBLE}"
+    }
+    /*parameters {
+        choice(name: 'projectName', choices: "build_images", description: 'Typing project_name, example build-images')
+        choice(name: 'tagName', choices: "${env.TAG_NAME}", description: "OutPut branch_name, example feature/*")
+        choice(name: 'userName', choices: "mcustomer", description: "Typing username, example mcustomer")    
+    }*/
+        stages {
+            stage('Parameters'){
+                steps {
+                    script {
+                    properties([
+                            parameters([
+                                [$class: 'ChoiceParameter', 
+                                    choiceType: 'PT_SINGLE_SELECT', 
+                                    description: 'Select the Environemnt from the Dropdown List', 
+                                    filterLength: 1, 
+                                    filterable: false, 
+                                    name: 'USERNAME', 
+                                    script: [
+                                        $class: 'GroovyScript', 
+                                        fallbackScript: [
+                                            classpath: [], 
+                                            sandbox: false, 
+                                            script: 
+                                                "return['Could not get The environemnts USERNAME']"
+                                        ], 
+                                        script: [
+                                            classpath: [], 
+                                            sandbox: false, 
+                                            script: 
+                                               'return["jenkins"]'
+                                        ]
+                                    ]
+                                ],
+                                [$class: 'ChoiceParameter', 
+                                    choiceType: 'PT_SINGLE_SELECT', 
+                                    description: 'Select the Environemnt from the Dropdown List', 
+                                    filterLength: 1, 
+                                    filterable: false, 
+                                    name: 'ENV', 
+                                    script: [
+                                        $class: 'GroovyScript', 
+                                        fallbackScript: [
+                                            classpath: [], 
+                                            sandbox: false, 
+                                            script: 
+                                                "return['Could not get The environemnts ENV']"
+                                        ], 
+                                        script: [
+                                            classpath: [], 
+                                            sandbox: false, 
+                                            script: 
+                                               'return["development"]'
+                                        ]
+                                    ]
+                                ],
+                                [$class: 'CascadeChoiceParameter', 
+                                    choiceType: 'PT_SINGLE_SELECT', 
+                                    description: 'Select the AMI from the Dropdown List',
+                                    name: 'SERVER_NAME', 
+                                    referencedParameters: 'Env', 
+                                    script: 
+                                        [$class: 'GroovyScript', 
+                                        fallbackScript: [
+                                                classpath: [], 
+                                                sandbox: false, 
+                                                script: "return['Could not get Environment from SERVER_NAME Param']"
+                                                ], 
+                                        script: [
+                                                classpath: [], 
+                                                sandbox: false, 
+                                                script: '''
+                                                if (Env.equals("devevelopment")){
+                                                    return["backend", "frontend" ]
+                                                }
+                                                '''
+                                            ] 
+                                    ]
+                                ],
+                                [$class: 'CascadeChoiceParameter', 
+                                    choiceType: 'PT_SINGLE_SELECT', 
+                                    description: 'Select the AMI from the Dropdown List',
+                                    name: 'PROJECT_GROUP', 
+                                    referencedParameters: 'Env', 
+                                    script: 
+                                        [$class: 'GroovyScript', 
+                                        fallbackScript: [
+                                                classpath: [], 
+                                                sandbox: false, 
+                                                script: "return['Could not get The environemnts PROJECT_GROUP']"
+                                                ], 
+                                        script: [
+                                                classpath: [], 
+                                                sandbox: false, 
+                                                script: '''
+                                                if (Env.equals("devevelopment")){
+                                                    return["demo"]
+                                                }
+                                                '''
+                                            ] 
+                                    ]
+                                ],
+                                [$class: 'DynamicReferenceParameter', 
+                                    choiceType: 'ET_ORDERED_LIST', 
+                                    description: 'Select the  AMI based on the following infomration', 
+                                    name: 'TAGGING_NUMBER', 
+                                    referencedParameters: 'Env', 
+                                    script: 
+                                        [$class: 'GroovyScript', 
+                                        script: 'return["Could not get The CREATE_TAGGING Param"]', 
+                                        script: [
+                                            script: '''
+                                                    if (Env.equals("development")){
+                                                        inputBox="<input name='value' type='text'>"]
+                                                    }
+                                                    '''
+                                                ]
+                                        ]
+                                ],
+                                [$class: 'DynamicReferenceParameter', 
+                                    choiceType: 'ET_ORDERED_LIST', 
+                                    description: 'Select the  AMI based on the following infomration', 
+                                    name: 'PLEASE READ this information !!!!!!!!!!!!!!!!!!!!!!', 
+                                    referencedParameters: 'Env', 
+                                    script: 
+                                        [$class: 'GroovyScript', 
+                                        script: 'return["Could not get Information DynamicReferenceParameter"]', 
+                                        script: [
+                                            script: '''
+                                                    if (Env.equals("development")){
+                                                        return["frontend: 143.198.218.122"]
+                                                    }
+                                                    else if(ENV.equals("development")){
+                                                        return["backend: 143.198.218.122"]
+                                                    }
+                                                    '''
+                                                ]
+                                        ]
+                                ]
+                            ])
+                        ])
+                    }
+                }
+            }
+            stage('Preparation Git Clone'){
+            	steps{
+            		script{
+                        // repo PROJECT_NAME
+                        def PROJECT_BRANCH = "${env.GITHUB_BRANCH}"
+                        def PROJECT_ENV = "${params.ENV}"
+                        def PROJECT_GROUP = "${params.PROJECT_GROUP}"
+                        def PROJECT_NAME = "${params.PROJECT_NAME}"
+                        def PROJECT_TAGGING = "${env.TAGGING_NUMBER}"
+                        // def SERVER_NAME = "${params.SERVER_NAME}"
+                        // def STACK_NAME = "${params.STACK}"
+                        def USER_NAME = "${params.USERNAME}"
+                        //NOTIF_MSG="Build #${BUILD_NUMBER} on STAGE PREPARATION - "
+                        git branch: "${GITHUB_BRANCH}",
+                            credentialsId: 'GITHUBCRED',
+                            url: "${GITHUB_REPO_URL}"
+                        sh """ 
+                        printenv | sort
+                        git submodule update --init --recursive
+                        echo BRANCHNAME: ${PROJECT_BRANCH}
+                        echo PROJECTENV: ${PROJECT_ENV}
+                        echo PROJECTGROUP: ${PROJECT_GROUP}
+                        echo PROJECTNAME: ${PROJECT_NAME}
+                        // echo SERVER_NAME: ${SERVER_NAME}
+                        echo TAGGINGNAME: ${PROJECT_TAGGING}
+                        echo USER_NAME: ${USER_NAME}
+                        """
+                    }
+                }
+            }
+            stage('Deployment'){
+        		steps{
+                    script {
+                        //NOTIF_MSG="Build #${BUILD_NUMBER} on STAGE DEPLOYMENT - "
+                        def PROJECT_BRANCH = "${env.GITHUB_BRANCH}"
+                        def PROJECT_ENV = "${params.ENV}"
+                        def PROJECT_GROUP = "${params.PROJECT_GROUP}"
+                        def PROJECT_NAME = "${params.PROJECT_NAME}"
+                        def PROJECT_TAGGING = "${env.TAGGING_NUMBER}"
+                        // def SERVER_NAME = "${params.SERVER_NAME}"
+                        // def STACK_NAME = "${params.STACK}"
+                        def USER_NAME = "${params.USER_NAME}"
+                        stage("Running Playbook ${PROJECT_NAME}"){
+                    script {
+                        //NOTIF_MSG="Build #${BUILD_NUMBER} on STAGE ${PROJECT_NAME} - Deployment - "
+                        dir("${WORKSPACE}") {
+                        withCredentials([
+                            file(credentialsId: 'vault', variable: 'vault')]){
+                            // Ansible vault key password
+                                sh 'mv "${vault}" ansible_vault'
+                                    def filePathVault = readFile "ansible_vault"
+                                    def pass_vault = filePathVault.readLines()
+                                sh """
+                                    cd ${HOME}/ansible
+                                    hacking/env-setup -q
+                                    cd ${WORKSPACE}
+                                    time ansible-playbook \
+                                    -e '{"paramsGitUrl":"${GIT_URL}"}' \
+                                    -e '{"paramsHomeJenkins":"${JENKINS_HOME}"}' \
+                                    -e '{"paramsPWD":"${PWD}"}' \
+                                    -e '{"paramsProjectBranch":"${PROJECT_BRANCH}"}' \
+                                    -e '{"paramsProjectEnv":"${PROJECT_ENV}"}' \
+                                    -e '{"paramsProjectGroup":"${PROJECT_GROUP}"}' \
+                                    -e '{"paramsProjectName":"${PROJECT_NAME}"}' \
+                                    -e '{"paramsProjectTagging":"${PROJECT_TAGGING}"}' \
+                                    -e '{"paramsSTACK":"${STACK_NAME}"}' \
+                                    -e '{"paramsServerName":"${SERVER_NAME}"}' \
+                                    -e '{"paramsUserJenkins":"${USER}"}' \
+                                    -e '{"paramsUserName":"${USER_NAME}"}' \
+                                    // -e @${WORKSPACE}/env_vars/env/${PROJECT_GROUP}.json \
+                                    // -e @${WORKSPACE}/env_vars/env/all.json \
+                                    -i "${WORKSPACE}/task.yml" \
+                                ${WORKSPACE}/playbook/microservices/${PROJECT_ENV}_${PROJECT_GROUP}_${SERVER_NAME}.yml --vault-password-file ansible_vault --flush-cache
+                                """
+                                }
+                            }
+                        }   
+                    }
+                }
+            }
+        }
+    }
+        post{
+            always{
+    	        cleanWs()
+                }
+    	    }
+        }
