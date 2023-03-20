@@ -1,24 +1,28 @@
-pipeline {
-    agent any
-    environment {
-    // repo ANSIBLE
-        def GITHUB = "git@api.github.com"
-        def GITHUB_REPO = "fathankep0"
-    // def GITLAB_INFRA_GROUP = 'devsecops'
-    // def GITLAB_REPOSITORY_ANSIBLE = 'infra-as-code'
-    // def GITLAB_ANSIBLE = "${GITLAB}:${GITLAB_GROUP}/${GITLAB_INFRA_GROUP}/${GITLAB_REPOSITORY_ANSIBLE}.git"
-        def GITHUB_BRANCH = "deveploment"
-        def GITHUB_REPO_URL = "https://github.com/fathankep0/k8s-jenkins-example.git"
-        def GITHUBCRED = "GITHUBCRED"
-    // def GITLAB_URL_ANSIBLE = "infra-as-code-development"
-    //def GITLAB_INFRA_REPO = "${GITLAB}/${GITLAB_INFRA_GROUP}/${GITLAB_REPOSITORY_ANSIBLE}/-/archive/${GITLAB_BRANCH_ANSIBLE}/${GITLAB_URL_ANSIBLE}.zip"
-    // def GITLAB_INFRA_REPO = "${GITLAB_ANSIBLE}"
-    }
-    /*parameters {
-        choice(name: 'projectName', choices: "build_images", description: 'Typing project_name, example build-images')
-        choice(name: 'tagName', choices: "${env.TAG_NAME}", description: "OutPut branch_name, example feature/*")
-        choice(name: 'userName', choices: "mcustomer", description: "Typing username, example mcustomer")    
-    }*/
+import jenkins.model.*
+
+def call (){
+
+    pipeline {
+        agent any
+        environment {
+        // repo ANSIBLE
+            def GITHUB = "git@api.github.com"
+            def GITHUB_REPO = "fathankep0"
+        // def GITLAB_INFRA_GROUP = 'devsecops'
+        // def GITLAB_REPOSITORY_ANSIBLE = 'infra-as-code'
+        // def GITLAB_ANSIBLE = "${GITLAB}:${GITLAB_GROUP}/${GITLAB_INFRA_GROUP}/${GITLAB_REPOSITORY_ANSIBLE}.git"
+            def GITHUB_BRANCH = "deveploment"
+            def GITHUB_REPO_URL = "https://github.com/fathankep0/k8s-jenkins-example.git"
+            def GITHUBCRED = "GITHUBCRED"
+        // def GITLAB_URL_ANSIBLE = "infra-as-code-development"
+        //def GITLAB_INFRA_REPO = "${GITLAB}/${GITLAB_INFRA_GROUP}/${GITLAB_REPOSITORY_ANSIBLE}/-/archive/${GITLAB_BRANCH_ANSIBLE}/${GITLAB_URL_ANSIBLE}.zip"
+        // def GITLAB_INFRA_REPO = "${GITLAB_ANSIBLE}"
+        }
+        /*parameters {
+            choice(name: 'projectName', choices: "build_images", description: 'Typing project_name, example build-images')
+            choice(name: 'tagName', choices: "${env.TAG_NAME}", description: "OutPut branch_name, example feature/*")
+            choice(name: 'userName', choices: "mcustomer", description: "Typing username, example mcustomer")    
+        }*/
         stages {
             stage('Parameters'){
                 steps {
