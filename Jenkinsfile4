@@ -1,6 +1,4 @@
-import jenkins.model.*
 
-def call (){
 
     pipeline {
         agent any
