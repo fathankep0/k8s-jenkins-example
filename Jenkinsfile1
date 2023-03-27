@@ -1,2 +1,0 @@
-@Library('jenkinsForJava@deveploment') _
-jenkinsForJava 'https://github.com/fathankep0/k8s-jenkins-example.git'
