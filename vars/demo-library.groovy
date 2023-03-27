@@ -23,7 +23,7 @@ pipeline {
         choice(name: 'tagName', choices: "${env.TAG_NAME}", description: "OutPut branch_name, example feature/*")
         choice(name: 'userName', choices: "mcustomer", description: "Typing username, example mcustomer")    
     }*/
-            stages { 
+    stages { 
                 stage('Parameters'){
                     steps {
                         script {
@@ -73,7 +73,7 @@ pipeline {
                                                 ]
                                             ]
                                         ],
-                                        [$class: 'CascadeChoiceParameter', 
+                                         [$class: 'CascadeChoiceParameter', 
                                             choiceType: 'PT_SINGLE_SELECT', 
                                             description: 'Select Server Name from the Dropdown List',
                                             filterLength: 1, 
@@ -208,8 +208,8 @@ pipeline {
                                 ])
                             }
                         }
-                    }         
-                stage('Preparation Git Clone'){
+                    }
+                 stage('Preparation Git Clone'){
         			steps{
         				script{
                             // repo PROJECT_NAME
