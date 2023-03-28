@@ -1,1 +1,1 @@
-@library('joblibraries@deveploment') _
+@library('demo-library@deveploment') _
