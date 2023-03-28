@@ -1,7 +1,6 @@
-import com.cloudbees.plugins.credentials.CredentialsProvider;
-import com.cloudbees.plugins.credentials.common.StandardUsernamePasswordCredentials;
 import jenkins.model.Jenkins
-
+def call () {
+}
 pipeline {
     agent any
     environment {
