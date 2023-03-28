@@ -186,16 +186,16 @@ pipeline {
                                                 script: [
                                                     script: '''
                                                             if (ENV.equals("proxy")){
-                                                                return["proxy: 10.20.0.4"]
+                                                                return["proxy: 10.104.0.2"]
                                                             }
                                                             else if(ENV.equals("development")){
-                                                                return["frontend: 10.20.0.4"]
+                                                                return["frontend: 10.104.0.2"]
                                                             }
                                                             else if(ENV.equals("development")){
-                                                                return["development: 10.20.0.4"]
+                                                                return["development: 10.104.0.2"]
                                                             }
                                                             else if(ENV.equals("uat")){
-                                                                return["uat: 10.20.0.4"]
+                                                                return["uat: 10.104.0.2"]
                                                             }
                                                             else if(ENV.equals("main")){
                                                                 return["main: "]
