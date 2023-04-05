@@ -1,2 +1,4 @@
 [frontend]
-10.104.0.3 ansible_user=root
+206.189.156.12 ansible_user=root
+[backend]
+139.59.236.238 ansible_user=root
